@@ -12,16 +12,13 @@ function IconPiano({ className = "w-4 h-4" }: { className?: string }) {
     </svg>
   );
 }
-
 function IconMusic({ className = "w-4 h-4" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M9 18V5l12-2v13" />
-      <circle cx="6" cy="18" r="3" /><circle cx="18" cy="16" r="3" />
+      <path d="M9 18V5l12-2v13" /><circle cx="6" cy="18" r="3" /><circle cx="18" cy="16" r="3" />
     </svg>
   );
 }
-
 function IconGuitar({ className = "w-4 h-4" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -30,7 +27,6 @@ function IconGuitar({ className = "w-4 h-4" }: { className?: string }) {
     </svg>
   );
 }
-
 function IconWave({ className = "w-4 h-4" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -38,7 +34,6 @@ function IconWave({ className = "w-4 h-4" }: { className?: string }) {
     </svg>
   );
 }
-
 function IconVolume({ className = "w-4 h-4" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -47,7 +42,6 @@ function IconVolume({ className = "w-4 h-4" }: { className?: string }) {
     </svg>
   );
 }
-
 function IconReverb({ className = "w-4 h-4" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -55,16 +49,13 @@ function IconReverb({ className = "w-4 h-4" }: { className?: string }) {
     </svg>
   );
 }
-
 function IconDelay({ className = "w-4 h-4" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="10" />
-      <polyline points="12 6 12 12 16 14" />
+      <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
     </svg>
   );
 }
-
 function IconChorus({ className = "w-4 h-4" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -73,7 +64,6 @@ function IconChorus({ className = "w-4 h-4" }: { className?: string }) {
     </svg>
   );
 }
-
 function IconDistortion({ className = "w-4 h-4" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -81,7 +71,6 @@ function IconDistortion({ className = "w-4 h-4" }: { className?: string }) {
     </svg>
   );
 }
-
 function IconCompressor({ className = "w-4 h-4" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -89,7 +78,6 @@ function IconCompressor({ className = "w-4 h-4" }: { className?: string }) {
     </svg>
   );
 }
-
 function IconMixer({ className = "w-4 h-4" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -100,7 +88,6 @@ function IconMixer({ className = "w-4 h-4" }: { className?: string }) {
     </svg>
   );
 }
-
 function IconStar({ className = "w-4 h-4" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -108,11 +95,24 @@ function IconStar({ className = "w-4 h-4" }: { className?: string }) {
     </svg>
   );
 }
-
 function IconSparkle({ className = "w-4 h-4" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4" />
+    </svg>
+  );
+}
+function IconMenu({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" />
+    </svg>
+  );
+}
+function IconX({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
     </svg>
   );
 }
@@ -297,7 +297,6 @@ function MixerSlider({
     orange: "from-orange-500 to-orange-600",
     amber: "from-amber-500 to-amber-600",
     rose: "from-rose-500 to-rose-600",
-    zinc: "from-zinc-400 to-zinc-500",
   };
   const trackColor = colorMap[color] ?? colorMap.orange;
 
@@ -327,6 +326,120 @@ function MixerSlider({
   );
 }
 
+// ─── Sidebar content (shared between desktop sidebar and mobile drawer) ──
+function InstrumentPanel({
+  instrument, setInstrument, categories,
+}: {
+  instrument: string;
+  setInstrument: (id: string) => void;
+  categories: Record<string, Instrument[]>;
+}) {
+  return (
+    <>
+      <p className="text-[10px] font-semibold text-orange-400/40 uppercase tracking-[0.15em] px-2 mb-3">
+        Instruments
+      </p>
+      <nav className="flex flex-col gap-4">
+        {Object.entries(categories).map(([category, instruments]) => (
+          <div key={category}>
+            <p className="text-[10px] font-medium text-zinc-600 uppercase tracking-[0.12em] px-2 mb-1.5">
+              {category}
+            </p>
+            <div className="flex flex-col gap-0.5">
+              {instruments.map((inst) => {
+                const isActive = instrument === inst.id;
+                return (
+                  <button
+                    key={inst.id}
+                    onClick={() => setInstrument(inst.id)}
+                    className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] transition-all cursor-pointer ${
+                      isActive
+                        ? "bg-orange-500/[0.1] text-orange-100 border border-orange-500/[0.15]"
+                        : "text-zinc-500 hover:bg-white/[0.03] hover:text-zinc-300 border border-transparent"
+                    }`}
+                  >
+                    <span className={`${isActive ? "text-orange-400" : "text-zinc-600"} transition-colors`}>
+                      {inst.icon}
+                    </span>
+                    <span className="font-medium">{inst.name}</span>
+                    {isActive && (
+                      <span className="ml-auto w-1.5 h-1.5 rounded-full bg-orange-400 shadow-sm shadow-orange-400/50" />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </nav>
+    </>
+  );
+}
+
+function MixerPanel({
+  mixer, updateMixer, resetMixer,
+}: {
+  mixer: MixerState;
+  updateMixer: (key: keyof MixerState, value: number) => void;
+  resetMixer: () => void;
+}) {
+  return (
+    <div className="flex flex-col gap-5">
+      <div>
+        <p className="text-[10px] font-semibold text-orange-400/40 uppercase tracking-[0.15em] mb-3">Output</p>
+        <MixerSlider icon={<IconVolume className="w-3.5 h-3.5" />} label="Volume" value={mixer.volume} onChange={(v) => updateMixer("volume", v)} color="orange" />
+      </div>
+      <div className="h-px bg-orange-500/[0.06]" />
+      <div>
+        <p className="text-[10px] font-semibold text-orange-400/40 uppercase tracking-[0.15em] mb-3">Space</p>
+        <div className="flex flex-col gap-4">
+          <MixerSlider icon={<IconReverb className="w-3.5 h-3.5" />} label="Reverb" value={mixer.reverb} onChange={(v) => updateMixer("reverb", v)} color="amber" />
+          <MixerSlider icon={<IconDelay className="w-3.5 h-3.5" />} label="Delay" value={mixer.delay} onChange={(v) => updateMixer("delay", v)} color="amber" />
+          <MixerSlider icon={<IconDelay className="w-3.5 h-3.5" />} label="Delay Time" value={mixer.delayTime} onChange={(v) => updateMixer("delayTime", v)} color="amber" />
+          <MixerSlider icon={<IconChorus className="w-3.5 h-3.5" />} label="Chorus" value={mixer.chorus} onChange={(v) => updateMixer("chorus", v)} color="amber" />
+        </div>
+      </div>
+      <div className="h-px bg-orange-500/[0.06]" />
+      <div>
+        <p className="text-[10px] font-semibold text-orange-400/40 uppercase tracking-[0.15em] mb-3">Dynamics</p>
+        <div className="flex flex-col gap-4">
+          <MixerSlider icon={<IconDistortion className="w-3.5 h-3.5" />} label="Distortion" value={mixer.distortion} onChange={(v) => updateMixer("distortion", v)} color="rose" />
+          <MixerSlider icon={<IconCompressor className="w-3.5 h-3.5" />} label="Compressor" value={mixer.compressor} onChange={(v) => updateMixer("compressor", v)} color="orange" />
+        </div>
+      </div>
+      <button
+        onClick={resetMixer}
+        className="text-[11px] text-zinc-600 hover:text-orange-400 transition-colors cursor-pointer py-2 px-3 rounded-lg border border-orange-500/[0.08] hover:bg-orange-500/[0.05] text-center mt-1"
+      >
+        Reset Mixer
+      </button>
+    </div>
+  );
+}
+
+// ─── Responsive key sizing hook ─────────────────────────────────────
+function useKeySize() {
+  const [size, setSize] = useState({ keyW: 52, gap: 2, blackW: 30, blackH: 130 });
+
+  useEffect(() => {
+    function update() {
+      const w = window.innerWidth;
+      if (w < 640) {
+        setSize({ keyW: 36, gap: 1, blackW: 22, blackH: 88 });
+      } else if (w < 1024) {
+        setSize({ keyW: 44, gap: 2, blackW: 26, blackH: 108 });
+      } else {
+        setSize({ keyW: 52, gap: 2, blackW: 30, blackH: 130 });
+      }
+    }
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  return size;
+}
+
 // ─── Main component ─────────────────────────────────────────────────
 export default function Home() {
   const audioCtxRef = useRef<AudioContext | null>(null);
@@ -334,6 +447,9 @@ export default function Home() {
   const [instrument, setInstrument] = useState("piano");
   const [octave, setOctave] = useState(4);
   const [mixer, setMixer] = useState<MixerState>(DEFAULT_MIXER);
+  const [leftOpen, setLeftOpen] = useState(false);
+  const [rightOpen, setRightOpen] = useState(false);
+  const keySize = useKeySize();
 
   const instrumentRef = useRef(instrument);
   const octaveRef = useRef(octave);
@@ -465,66 +581,67 @@ export default function Home() {
   const updateMixer = (key: keyof MixerState, value: number) => setMixer((p) => ({ ...p, [key]: value }));
   const currentInstrument = INSTRUMENTS.find((i) => i.id === instrument);
 
-  return (
-    <div className="flex min-h-screen bg-[#0a0a0c] text-white overflow-hidden">
+  // Close drawers when clicking overlay
+  const closeAll = () => { setLeftOpen(false); setRightOpen(false); };
 
-      {/* ── Left Sidebar: Instruments ── */}
-      <aside className="w-56 shrink-0 flex flex-col border-r border-orange-500/[0.08] bg-[#0e0e11]">
-        {/* Brand */}
-        <div className="px-5 pt-6 pb-4 border-b border-orange-500/[0.08]">
+  return (
+    <div className="flex min-h-screen min-h-[100dvh] bg-[#0a0a0c] text-white overflow-hidden relative">
+
+      {/* ── Mobile overlay ── */}
+      {(leftOpen || rightOpen) && (
+        <div className="fixed inset-0 bg-black/60 z-30 lg:hidden" onClick={closeAll} />
+      )}
+
+      {/* ── Mobile top bar ── */}
+      <div className="fixed top-0 left-0 right-0 z-20 flex items-center justify-between px-4 py-3 bg-[#0a0a0c]/90 backdrop-blur-md border-b border-orange-500/[0.08] lg:hidden">
+        <button onClick={() => { setLeftOpen(!leftOpen); setRightOpen(false); }} className="w-9 h-9 rounded-lg bg-white/[0.05] flex items-center justify-center cursor-pointer">
+          {leftOpen ? <IconX className="w-4 h-4 text-zinc-400" /> : <IconPiano className="w-4 h-4 text-orange-400" />}
+        </button>
+        <div className="flex items-center gap-2">
+          <div className="w-6 h-6 rounded-md bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center">
+            <IconPiano className="w-3 h-3 text-white" />
+          </div>
+          <span className="text-sm font-bold tracking-tight">WEBANO</span>
+        </div>
+        <button onClick={() => { setRightOpen(!rightOpen); setLeftOpen(false); }} className="w-9 h-9 rounded-lg bg-white/[0.05] flex items-center justify-center cursor-pointer">
+          {rightOpen ? <IconX className="w-4 h-4 text-zinc-400" /> : <IconMixer className="w-4 h-4 text-orange-400" />}
+        </button>
+      </div>
+
+      {/* ── Left Sidebar / Drawer ── */}
+      <aside className={`
+        fixed top-0 left-0 bottom-0 w-64 z-40 flex flex-col border-r border-orange-500/[0.08] bg-[#0e0e11]
+        transition-transform duration-300 ease-in-out
+        lg:relative lg:w-56 lg:translate-x-0 lg:z-0
+        ${leftOpen ? "translate-x-0" : "-translate-x-full"}
+      `}>
+        {/* Brand — desktop */}
+        <div className="px-5 pt-6 pb-4 border-b border-orange-500/[0.08] hidden lg:block">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center shadow-lg shadow-orange-500/20">
               <IconPiano className="w-4 h-4 text-white" />
             </div>
             <div>
-              <h1 className="text-sm font-semibold tracking-tight">Synth Studio</h1>
+              <h1 className="text-sm font-bold tracking-tight">WEBANO</h1>
               <p className="text-[10px] text-zinc-600">Virtual Instrument</p>
             </div>
           </div>
         </div>
 
-        {/* Instrument list */}
-        <div className="flex-1 overflow-y-auto px-3 py-4">
-          <p className="text-[10px] font-semibold text-orange-400/40 uppercase tracking-[0.15em] px-2 mb-3">
-            Instruments
-          </p>
-          <nav className="flex flex-col gap-4">
-            {Object.entries(categories).map(([category, instruments]) => (
-              <div key={category}>
-                <p className="text-[10px] font-medium text-zinc-600 uppercase tracking-[0.12em] px-2 mb-1.5">
-                  {category}
-                </p>
-                <div className="flex flex-col gap-0.5">
-                  {instruments.map((inst) => {
-                    const isActive = instrument === inst.id;
-                    return (
-                      <button
-                        key={inst.id}
-                        onClick={() => setInstrument(inst.id)}
-                        className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] transition-all cursor-pointer ${
-                          isActive
-                            ? "bg-orange-500/[0.1] text-orange-100 border border-orange-500/[0.15]"
-                            : "text-zinc-500 hover:bg-white/[0.03] hover:text-zinc-300 border border-transparent"
-                        }`}
-                      >
-                        <span className={`${isActive ? "text-orange-400" : "text-zinc-600"} transition-colors`}>
-                          {inst.icon}
-                        </span>
-                        <span className="font-medium">{inst.name}</span>
-                        {isActive && (
-                          <span className="ml-auto w-1.5 h-1.5 rounded-full bg-orange-400 shadow-sm shadow-orange-400/50" />
-                        )}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            ))}
-          </nav>
+        {/* Mobile drawer header */}
+        <div className="px-5 pt-5 pb-3 flex items-center justify-between lg:hidden">
+          <span className="text-sm font-bold">Instruments</span>
+          <button onClick={() => setLeftOpen(false)} className="w-7 h-7 rounded-md bg-white/[0.05] flex items-center justify-center cursor-pointer">
+            <IconX className="w-3.5 h-3.5 text-zinc-400" />
+          </button>
         </div>
 
-        {/* Keyboard hints */}
-        <div className="px-4 py-4 border-t border-orange-500/[0.08]">
+        <div className="flex-1 overflow-y-auto px-3 py-4">
+          <InstrumentPanel instrument={instrument} setInstrument={(id) => { setInstrument(id); setLeftOpen(false); }} categories={categories} />
+        </div>
+
+        {/* Keyboard hints — desktop only */}
+        <div className="px-4 py-4 border-t border-orange-500/[0.08] hidden lg:block">
           <p className="text-[10px] text-zinc-700 leading-relaxed">
             <span className="text-zinc-500">White</span> Q W E R T Y U I O P [ ]
           </p>
@@ -538,29 +655,29 @@ export default function Home() {
       </aside>
 
       {/* ── Center: Piano ── */}
-      <main className="flex-1 flex flex-col items-center justify-center relative">
+      <main className="flex-1 flex flex-col items-center justify-center relative pt-16 pb-6 lg:pt-0 lg:pb-0 overflow-y-auto">
         {/* Ambient glow */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-orange-500/[0.03] rounded-full blur-[100px]" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] lg:w-[800px] lg:h-[500px] bg-orange-500/[0.03] rounded-full blur-[100px]" />
         </div>
 
         {/* Header */}
-        <div className="relative text-center mb-6">
-          <h2 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-orange-200 via-white to-orange-200 bg-clip-text text-transparent">
-            Virtual Piano
+        <div className="relative text-center mb-4 lg:mb-6">
+          <h2 className="text-xl lg:text-2xl font-bold tracking-tight bg-gradient-to-r from-orange-200 via-white to-orange-200 bg-clip-text text-transparent">
+            WEBANO
           </h2>
-          <p className="text-zinc-600 text-xs mt-1.5 flex items-center justify-center gap-1.5">
+          <p className="text-zinc-600 text-[11px] lg:text-xs mt-1 flex items-center justify-center gap-1.5">
             <span className="text-orange-400/60">{currentInstrument?.icon}</span>
             {currentInstrument?.name} · Octave {octave}
           </p>
         </div>
 
         {/* Octave control */}
-        <div className="relative flex items-center gap-1.5 mb-8">
+        <div className="relative flex items-center gap-1 lg:gap-1.5 mb-5 lg:mb-8">
           <button
             onClick={() => setOctave((p) => Math.max(1, p - 1))}
             disabled={octave <= 1}
-            className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.06] text-zinc-500 flex items-center justify-center
+            className="w-7 h-7 lg:w-8 lg:h-8 rounded-lg bg-white/[0.04] border border-white/[0.06] text-zinc-500 flex items-center justify-center
               hover:bg-white/[0.08] hover:text-white disabled:opacity-20 disabled:cursor-not-allowed transition-all cursor-pointer text-sm"
           >
             ‹
@@ -569,7 +686,7 @@ export default function Home() {
             <button
               key={o}
               onClick={() => setOctave(o)}
-              className={`w-8 h-8 rounded-lg text-[11px] font-semibold transition-all cursor-pointer ${
+              className={`w-7 h-7 lg:w-8 lg:h-8 rounded-lg text-[10px] lg:text-[11px] font-semibold transition-all cursor-pointer ${
                 octave === o
                   ? "bg-gradient-to-b from-orange-500 to-orange-600 text-white shadow-lg shadow-orange-500/30 border border-orange-400/30"
                   : "bg-white/[0.03] border border-white/[0.05] text-zinc-600 hover:bg-white/[0.06] hover:text-zinc-400"
@@ -581,97 +698,111 @@ export default function Home() {
           <button
             onClick={() => setOctave((p) => Math.min(7, p + 1))}
             disabled={octave >= 7}
-            className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.06] text-zinc-500 flex items-center justify-center
+            className="w-7 h-7 lg:w-8 lg:h-8 rounded-lg bg-white/[0.04] border border-white/[0.06] text-zinc-500 flex items-center justify-center
               hover:bg-white/[0.08] hover:text-white disabled:opacity-20 disabled:cursor-not-allowed transition-all cursor-pointer text-sm"
           >
             ›
           </button>
         </div>
 
-        {/* Piano */}
-        <div className="relative select-none">
-          {/* Piano body */}
-          <div className="absolute -inset-4 -bottom-6 rounded-2xl bg-gradient-to-b from-[#18181b] to-[#111113] border border-white/[0.04] shadow-2xl shadow-black/60 -z-10" />
+        {/* Piano — horizontally scrollable on small screens */}
+        <div className="w-full overflow-x-auto px-4 flex justify-center">
+          <div className="relative select-none shrink-0">
+            {/* Piano body */}
+            <div className="absolute -inset-3 lg:-inset-4 -bottom-4 lg:-bottom-6 rounded-xl lg:rounded-2xl bg-gradient-to-b from-[#18181b] to-[#111113] border border-white/[0.04] shadow-2xl shadow-black/60 -z-10" />
 
-          {/* White keys */}
-          <div className="flex gap-[2px]">
-            {whiteKeys.map((note) => {
-              const label = getNoteLabel(note.note, octave);
-              const isPressed = activeKeys.has(label);
-              return (
-                <button
-                  key={note.note}
-                  onMouseDown={() => { setActiveKeys((p) => new Set(p).add(label)); playNote(note.semitone); }}
-                  onMouseUp={() => { setActiveKeys((p) => { const n = new Set(p); n.delete(label); return n; }); }}
-                  onMouseLeave={() => { setActiveKeys((p) => { const n = new Set(p); n.delete(label); return n; }); }}
-                  className={`relative w-[52px] h-52 rounded-b-lg flex flex-col items-center justify-end pb-3 transition-all duration-75 cursor-pointer ${
-                    isPressed
-                      ? "bg-gradient-to-b from-orange-100 to-orange-200/80 translate-y-[1px]"
-                      : "bg-gradient-to-b from-[#f5f5f0] to-[#e8e8e3] hover:from-[#eeeeea] hover:to-[#e0e0db]"
-                  }`}
-                  style={{
-                    boxShadow: isPressed
-                      ? "inset 0 2px 8px rgba(234,88,12,0.15), inset 0 1px 3px rgba(0,0,0,0.1)"
-                      : "0 4px 8px rgba(0,0,0,0.4), inset 0 -2px 0 rgba(0,0,0,0.04), 0 1px 0 rgba(255,255,255,0.5) inset",
-                  }}
-                >
-                  <span className={`text-[10px] font-semibold transition-colors ${
-                    isPressed ? "text-orange-500" : "text-zinc-400"
-                  }`}>
-                    {note.key.toUpperCase()}
-                  </span>
-                  <span className="text-[8px] text-zinc-400/60 mt-0.5 font-medium">{label}</span>
-                </button>
-              );
-            })}
-          </div>
+            {/* White keys */}
+            <div className="flex gap-[1px] sm:gap-[2px]">
+              {whiteKeys.map((note) => {
+                const label = getNoteLabel(note.note, octave);
+                const isPressed = activeKeys.has(label);
+                return (
+                  <button
+                    key={note.note}
+                    onMouseDown={() => { setActiveKeys((p) => new Set(p).add(label)); playNote(note.semitone); }}
+                    onMouseUp={() => { setActiveKeys((p) => { const n = new Set(p); n.delete(label); return n; }); }}
+                    onMouseLeave={() => { setActiveKeys((p) => { const n = new Set(p); n.delete(label); return n; }); }}
+                    onTouchStart={(e) => { e.preventDefault(); setActiveKeys((p) => new Set(p).add(label)); playNote(note.semitone); }}
+                    onTouchEnd={() => { setActiveKeys((p) => { const n = new Set(p); n.delete(label); return n; }); }}
+                    className={`relative w-[36px] h-36 sm:w-[44px] sm:h-44 lg:w-[52px] lg:h-52 rounded-b-md lg:rounded-b-lg flex flex-col items-center justify-end pb-2 lg:pb-3 transition-all duration-75 cursor-pointer touch-none ${
+                      isPressed
+                        ? "bg-gradient-to-b from-orange-100 to-orange-200/80 translate-y-[1px]"
+                        : "bg-gradient-to-b from-[#f5f5f0] to-[#e8e8e3] hover:from-[#eeeeea] hover:to-[#e0e0db]"
+                    }`}
+                    style={{
+                      boxShadow: isPressed
+                        ? "inset 0 2px 8px rgba(234,88,12,0.15), inset 0 1px 3px rgba(0,0,0,0.1)"
+                        : "0 4px 8px rgba(0,0,0,0.4), inset 0 -2px 0 rgba(0,0,0,0.04)",
+                    }}
+                  >
+                    <span className={`text-[8px] sm:text-[9px] lg:text-[10px] font-semibold transition-colors ${
+                      isPressed ? "text-orange-500" : "text-zinc-400"
+                    }`}>
+                      {note.key.toUpperCase()}
+                    </span>
+                    <span className="text-[7px] sm:text-[8px] text-zinc-400/60 mt-0.5 font-medium hidden sm:block">{label}</span>
+                  </button>
+                );
+              })}
+            </div>
 
-          {/* Black keys */}
-          <div className="absolute top-0 left-0 pointer-events-none">
-            {blackKeys.map((note) => {
-              const label = getNoteLabel(note.note, octave);
-              const isPressed = activeKeys.has(label);
-              const offset = getBlackKeyOffset(note.note);
-              const leftPos = offset * 54 + 35;
-              return (
-                <button
-                  key={note.note}
-                  onMouseDown={() => { setActiveKeys((p) => new Set(p).add(label)); playNote(note.semitone); }}
-                  onMouseUp={() => { setActiveKeys((p) => { const n = new Set(p); n.delete(label); return n; }); }}
-                  onMouseLeave={() => { setActiveKeys((p) => { const n = new Set(p); n.delete(label); return n; }); }}
-                  style={{
-                    left: `${leftPos}px`,
-                    boxShadow: isPressed
-                      ? "inset 0 2px 4px rgba(0,0,0,0.5)"
-                      : "0 4px 8px rgba(0,0,0,0.6), inset 0 -1px 0 rgba(255,255,255,0.04)",
-                  }}
-                  className={`absolute pointer-events-auto w-[30px] h-[130px] rounded-b-md flex flex-col items-center justify-end pb-2 transition-all duration-75 cursor-pointer z-10 ${
-                    isPressed
-                      ? "bg-gradient-to-b from-[#3a3a3f] to-[#2a2a2f] translate-y-[1px]"
-                      : "bg-gradient-to-b from-[#2a2a2f] to-[#1a1a1e] hover:from-[#333338] hover:to-[#252528]"
-                  }`}
-                >
-                  <span className={`text-[8px] font-semibold transition-colors ${
-                    isPressed ? "text-orange-400" : "text-zinc-600"
-                  }`}>
-                    {note.key.toUpperCase()}
-                  </span>
-                </button>
-              );
-            })}
+            {/* Black keys */}
+            <div className="absolute top-0 left-0 pointer-events-none">
+              {blackKeys.map((note) => {
+                const label = getNoteLabel(note.note, octave);
+                const isPressed = activeKeys.has(label);
+                const offset = getBlackKeyOffset(note.note);
+                const leftPos = offset * (keySize.keyW + keySize.gap) + keySize.keyW * 0.67;
+                return (
+                  <button
+                    key={note.note}
+                    onMouseDown={() => { setActiveKeys((p) => new Set(p).add(label)); playNote(note.semitone); }}
+                    onMouseUp={() => { setActiveKeys((p) => { const n = new Set(p); n.delete(label); return n; }); }}
+                    onMouseLeave={() => { setActiveKeys((p) => { const n = new Set(p); n.delete(label); return n; }); }}
+                    onTouchStart={(e) => { e.preventDefault(); setActiveKeys((p) => new Set(p).add(label)); playNote(note.semitone); }}
+                    onTouchEnd={() => { setActiveKeys((p) => { const n = new Set(p); n.delete(label); return n; }); }}
+                    className={`absolute pointer-events-auto rounded-b-sm sm:rounded-b-md touch-none
+                      flex flex-col items-center justify-end pb-1.5 lg:pb-2 transition-all duration-75 cursor-pointer z-10 ${
+                      isPressed
+                        ? "bg-gradient-to-b from-[#3a3a3f] to-[#2a2a2f] translate-y-[1px]"
+                        : "bg-gradient-to-b from-[#2a2a2f] to-[#1a1a1e] hover:from-[#333338] hover:to-[#252528]"
+                    }`}
+                    style={{
+                      left: `${leftPos}px`,
+                      width: `${keySize.blackW}px`,
+                      height: `${keySize.blackH}px`,
+                      boxShadow: isPressed
+                        ? "inset 0 2px 4px rgba(0,0,0,0.5)"
+                        : "0 4px 8px rgba(0,0,0,0.6), inset 0 -1px 0 rgba(255,255,255,0.04)",
+                    }}
+                  >
+                    <span className={`text-[7px] sm:text-[8px] lg:text-[9px] font-semibold transition-colors ${
+                      isPressed ? "text-orange-400" : "text-zinc-600"
+                    }`}>
+                      {note.key.toUpperCase()}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
 
         {/* Credits */}
-        <p className="text-zinc-700 mt-12 text-[11px] tracking-wide">
+        <p className="text-zinc-700 mt-6 lg:mt-10 text-[10px] lg:text-[11px] tracking-wide">
           made by <span className="text-orange-400/50">@saransriniv</span>
           <span className="mx-2 text-zinc-800">·</span>
           <span className="text-orange-400/50">nearcult</span>
         </p>
       </main>
 
-      {/* ── Right Sidebar: Mixer ── */}
-      <aside className="w-60 shrink-0 flex flex-col border-l border-orange-500/[0.08] bg-[#0e0e11]">
+      {/* ── Right Sidebar / Drawer ── */}
+      <aside className={`
+        fixed top-0 right-0 bottom-0 w-72 z-40 flex flex-col border-l border-orange-500/[0.08] bg-[#0e0e11]
+        transition-transform duration-300 ease-in-out
+        lg:relative lg:w-60 lg:translate-x-0 lg:z-0
+        ${rightOpen ? "translate-x-0" : "translate-x-full"}
+      `}>
         {/* Mixer header */}
         <div className="px-5 pt-6 pb-4 border-b border-orange-500/[0.08]">
           <div className="flex items-center justify-between">
@@ -681,49 +812,22 @@ export default function Home() {
               </div>
               <h2 className="text-sm font-semibold tracking-tight">Mixer</h2>
             </div>
-            <button
-              onClick={() => setMixer(DEFAULT_MIXER)}
-              className="text-[10px] text-zinc-600 hover:text-orange-400 transition-colors cursor-pointer px-2 py-1 rounded-md hover:bg-orange-500/[0.06]"
-            >
-              Reset
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setMixer(DEFAULT_MIXER)}
+                className="text-[10px] text-zinc-600 hover:text-orange-400 transition-colors cursor-pointer px-2 py-1 rounded-md hover:bg-orange-500/[0.06]"
+              >
+                Reset
+              </button>
+              <button onClick={() => setRightOpen(false)} className="w-7 h-7 rounded-md bg-white/[0.05] flex items-center justify-center cursor-pointer lg:hidden">
+                <IconX className="w-3.5 h-3.5 text-zinc-400" />
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Sliders */}
-        <div className="flex-1 overflow-y-auto px-4 py-5 flex flex-col gap-5">
-          <div>
-            <p className="text-[10px] font-semibold text-orange-400/40 uppercase tracking-[0.15em] mb-3">
-              Output
-            </p>
-            <MixerSlider icon={<IconVolume className="w-3.5 h-3.5" />} label="Volume" value={mixer.volume} onChange={(v) => updateMixer("volume", v)} color="orange" />
-          </div>
-
-          <div className="h-px bg-orange-500/[0.06]" />
-
-          <div>
-            <p className="text-[10px] font-semibold text-orange-400/40 uppercase tracking-[0.15em] mb-3">
-              Space
-            </p>
-            <div className="flex flex-col gap-4">
-              <MixerSlider icon={<IconReverb className="w-3.5 h-3.5" />} label="Reverb" value={mixer.reverb} onChange={(v) => updateMixer("reverb", v)} color="amber" />
-              <MixerSlider icon={<IconDelay className="w-3.5 h-3.5" />} label="Delay" value={mixer.delay} onChange={(v) => updateMixer("delay", v)} color="amber" />
-              <MixerSlider icon={<IconDelay className="w-3.5 h-3.5" />} label="Delay Time" value={mixer.delayTime} onChange={(v) => updateMixer("delayTime", v)} color="amber" />
-              <MixerSlider icon={<IconChorus className="w-3.5 h-3.5" />} label="Chorus" value={mixer.chorus} onChange={(v) => updateMixer("chorus", v)} color="amber" />
-            </div>
-          </div>
-
-          <div className="h-px bg-orange-500/[0.06]" />
-
-          <div>
-            <p className="text-[10px] font-semibold text-orange-400/40 uppercase tracking-[0.15em] mb-3">
-              Dynamics
-            </p>
-            <div className="flex flex-col gap-4">
-              <MixerSlider icon={<IconDistortion className="w-3.5 h-3.5" />} label="Distortion" value={mixer.distortion} onChange={(v) => updateMixer("distortion", v)} color="rose" />
-              <MixerSlider icon={<IconCompressor className="w-3.5 h-3.5" />} label="Compressor" value={mixer.compressor} onChange={(v) => updateMixer("compressor", v)} color="orange" />
-            </div>
-          </div>
+        <div className="flex-1 overflow-y-auto px-4 py-5">
+          <MixerPanel mixer={mixer} updateMixer={updateMixer} resetMixer={() => setMixer(DEFAULT_MIXER)} />
         </div>
 
         {/* Volume meter footer */}

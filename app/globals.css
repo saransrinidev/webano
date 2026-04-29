@@ -3,6 +3,22 @@
 :root {
   --background: #0a0a0c;
   --foreground: #ededed;
+  --key-w: 36px;
+  --key-gap: 1px;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --key-w: 44px;
+    --key-gap: 2px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --key-w: 52px;
+    --key-gap: 2px;
+  }
 }
 
 @theme inline {
@@ -20,7 +36,6 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
-  overflow: hidden;
 }
 
 /* Scrollbar */
@@ -28,18 +43,15 @@ aside::-webkit-scrollbar,
 aside *::-webkit-scrollbar {
   width: 3px;
 }
-
 aside::-webkit-scrollbar-track,
 aside *::-webkit-scrollbar-track {
   background: transparent;
 }
-
 aside::-webkit-scrollbar-thumb,
 aside *::-webkit-scrollbar-thumb {
   background: rgba(249, 115, 22, 0.1);
   border-radius: 4px;
 }
-
 aside::-webkit-scrollbar-thumb:hover,
 aside *::-webkit-scrollbar-thumb:hover {
   background: rgba(249, 115, 22, 0.2);
@@ -50,7 +62,6 @@ input[type="range"]::-moz-range-track {
   background: transparent;
   border: none;
 }
-
 input[type="range"]::-moz-range-thumb {
   appearance: none;
   width: 12px;

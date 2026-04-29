@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Synth Studio — Virtual Piano",
+  title: "WEBANO — Virtual Piano",
   description: "A virtual piano with multiple instruments and a mixer",
 };
 
