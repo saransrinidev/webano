@@ -449,15 +449,40 @@ export default function Home() {
   const [mixer, setMixer] = useState<MixerState>(DEFAULT_MIXER);
   const [leftOpen, setLeftOpen] = useState(false);
   const [rightOpen, setRightOpen] = useState(false);
+  const [bpm, setBpm] = useState(120);
+  const [metroOn, setMetroOn] = useState(false);
+  const [metroBeat, setMetroBeat] = useState(0);
+  const [isLooping, setIsLooping] = useState(false);
+  const [loopLabel, setLoopLabel] = useState<string | null>(null);
+  const [loopState, setLoopState] = useState<"idle" | "waiting" | "recording" | "looping">("idle");
+  const [loopCount, setLoopCount] = useState(0);
+  const [loopGapMs, setLoopGapMs] = useState(1000);
   const keySize = useKeySize();
 
   const instrumentRef = useRef(instrument);
   const octaveRef = useRef(octave);
   const mixerRef = useRef(mixer);
+  const bpmRef = useRef(bpm);
+  const isLoopingRef = useRef(false);
+  const lastPlayedRef = useRef<{ semitone: number; octave: number; label: string; instrumentId: string } | null>(null);
+  const loopStateRef = useRef<"idle" | "waiting" | "recording" | "looping">("idle");
+  const recordStartRef = useRef<number | null>(null);
+  const recordedRef = useRef<{ semitone: number; octave: number; instrumentId: string; atMs: number }[]>([]);
+  const loopEventsRef = useRef<{ semitone: number; octave: number; instrumentId: string; atMs: number }[]>([]);
+  const loopLengthRef = useRef(0);
+  const loopIntervalRef = useRef<number | null>(null);
+  const loopTimeoutsRef = useRef<number[]>([]);
+  const loopGapRef = useRef(1000);
+  const metroNextTimeRef = useRef(0);
+  const metroBeatRef = useRef(0);
 
   useEffect(() => { instrumentRef.current = instrument; }, [instrument]);
   useEffect(() => { octaveRef.current = octave; }, [octave]);
   useEffect(() => { mixerRef.current = mixer; }, [mixer]);
+  useEffect(() => { bpmRef.current = bpm; }, [bpm]);
+  useEffect(() => { isLoopingRef.current = isLooping; }, [isLooping]);
+  useEffect(() => { loopStateRef.current = loopState; }, [loopState]);
+  useEffect(() => { loopGapRef.current = loopGapMs; }, [loopGapMs]);
 
   const getAudioContext = useCallback(() => {
     if (!audioCtxRef.current) audioCtxRef.current = new AudioContext();
@@ -467,8 +492,37 @@ export default function Home() {
   const playNote = useCallback(
     (semitone: number) => {
       const ctx = getAudioContext();
+      if (ctx.state === "suspended") void ctx.resume();
       const m = mixerRef.current;
       const freq = getFrequency(semitone, octaveRef.current);
+      const noteDef = BASE_NOTES.find((n) => n.semitone === semitone);
+      lastPlayedRef.current = {
+        semitone,
+        octave: octaveRef.current,
+        label: getNoteLabel(noteDef?.note ?? `${semitone}`, octaveRef.current),
+        instrumentId: instrumentRef.current,
+      };
+      // ── Phrase-looper capture ──
+      if (loopStateRef.current === "waiting") {
+        recordStartRef.current = performance.now();
+        recordedRef.current = [{
+          semitone,
+          octave: octaveRef.current,
+          instrumentId: instrumentRef.current,
+          atMs: 0,
+        }];
+        loopStateRef.current = "recording";
+        setLoopState("recording");
+        setLoopCount(1);
+      } else if (loopStateRef.current === "recording" && recordStartRef.current !== null) {
+        recordedRef.current.push({
+          semitone,
+          octave: octaveRef.current,
+          instrumentId: instrumentRef.current,
+          atMs: performance.now() - recordStartRef.current,
+        });
+        setLoopCount(recordedRef.current.length);
+      }
 
       const masterGain = ctx.createGain();
       masterGain.gain.setValueAtTime(m.volume / 100, ctx.currentTime);
@@ -535,11 +589,156 @@ export default function Home() {
     [getAudioContext]
   );
 
+  // ─── Phrase looper (Spacebar): wait → record → loop ────────────────
+  // Play one recorded event with its own instrument/octave (used by looper).
+  const playRecordedNote = useCallback((ev: { semitone: number; octave: number; instrumentId: string }) => {
+    const ctx = getAudioContext();
+    if (ctx.state === "suspended") void ctx.resume();
+    const m = mixerRef.current;
+    const freq = getFrequency(ev.semitone, ev.octave);
+
+    const masterGain = ctx.createGain();
+    masterGain.gain.setValueAtTime(m.volume / 100, ctx.currentTime);
+    masterGain.connect(ctx.destination);
+    createInstrumentOscillators(ctx, freq, ev.instrumentId, masterGain);
+
+    // Visual key flash
+    const noteDef = BASE_NOTES.find((n) => n.semitone === ev.semitone);
+    if (noteDef) {
+      const label = getNoteLabel(noteDef.note, ev.octave);
+      setActiveKeys((prev) => new Set(prev).add(label));
+      window.setTimeout(() => {
+        setActiveKeys((prev) => { const n = new Set(prev); n.delete(label); return n; });
+      }, 350);
+    }
+  }, [getAudioContext]);
+
+  const clearLoopTimers = useCallback(() => {
+    if (loopIntervalRef.current !== null) {
+      window.clearInterval(loopIntervalRef.current);
+      loopIntervalRef.current = null;
+    }
+    loopTimeoutsRef.current.forEach((t) => window.clearTimeout(t));
+    loopTimeoutsRef.current = [];
+  }, []);
+
+  const stopLoop = useCallback(() => {
+    clearLoopTimers();
+    loopStateRef.current = "idle";
+    recordStartRef.current = null;
+    setLoopState("idle");
+    setIsLooping(false);
+    setLoopLabel(null);
+    setLoopCount(0);
+  }, [clearLoopTimers]);
+
+  const scheduleLoopPlayback = useCallback((events: { semitone: number; octave: number; instrumentId: string; atMs: number }[], lengthMs: number) => {
+    clearLoopTimers();
+    const playAll = () => {
+      loopTimeoutsRef.current.forEach((t) => window.clearTimeout(t));
+      loopTimeoutsRef.current = events.map((ev) =>
+        window.setTimeout(() => playRecordedNote(ev), ev.atMs)
+      );
+    };
+    playAll();
+    loopIntervalRef.current = window.setInterval(playAll, Math.max(500, lengthMs));
+  }, [clearLoopTimers, playRecordedNote]);
+
+  const toggleLoop = useCallback(() => {
+    const s = loopStateRef.current;
+    if (s === "looping") {
+      stopLoop();
+      return;
+    }
+    if (s === "idle") {
+      // Arm: wait for first key before the clock starts
+      clearLoopTimers();
+      recordedRef.current = [];
+      recordStartRef.current = null;
+      loopStateRef.current = "waiting";
+      setLoopState("waiting");
+      setLoopCount(0);
+      setLoopLabel("Waiting — play keys…");
+      getAudioContext();
+      return;
+    }
+    // s === "waiting" | "recording" → finish and loop (2nd Space press)
+    if (recordedRef.current.length === 0) {
+      // Nothing played → cancel
+      loopStateRef.current = "idle";
+      recordStartRef.current = null;
+      setLoopState("idle");
+      setLoopLabel(null);
+      return;
+    }
+    const now = performance.now();
+    const start = recordStartRef.current ?? now;
+    const lengthMs = Math.max(500, now - start + loopGapRef.current); // take + gap so repeats breathe
+    const events = [...recordedRef.current];
+    loopEventsRef.current = events;
+    loopLengthRef.current = lengthMs;
+    loopStateRef.current = "looping";
+    setLoopState("looping");
+    setIsLooping(true);
+    setLoopCount(events.length);
+    setLoopLabel(`${events.length} notes · ${(lengthMs / 1000).toFixed(1)}s loop`);
+    scheduleLoopPlayback(events, lengthMs);
+  }, [clearLoopTimers, getAudioContext, scheduleLoopPlayback, stopLoop]);
+
+  const toggleMetro = useCallback(() => {
+    if (metroOn) setMetroBeat(0);
+    setMetroOn((p) => !p);
+  }, [metroOn]);
+
+  useEffect(() => () => { clearLoopTimers(); }, [clearLoopTimers]);
+
+  // ─── Metronome engine ──────────────────────────────────────────────
+  const playClick = useCallback((time: number, accent: boolean) => {
+    const ctx = getAudioContext();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(accent ? 2000 : 1400, time);
+    gain.gain.setValueAtTime(0.0001, time);
+    gain.gain.linearRampToValueAtTime(0.6, time + 0.002);
+    gain.gain.exponentialRampToValueAtTime(0.001, time + 0.07);
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start(time); osc.stop(time + 0.09);
+  }, [getAudioContext]);
+
+  useEffect(() => {
+    if (!metroOn) return;
+    const ctx = getAudioContext();
+    if (ctx.state === "suspended") void ctx.resume();
+    metroBeatRef.current = 0;
+    metroNextTimeRef.current = ctx.currentTime + 0.06;
+    const timer = window.setInterval(() => {
+      const secondsPerBeat = 60 / Math.max(30, Math.min(300, bpmRef.current));
+      while (metroNextTimeRef.current < ctx.currentTime + 0.12) {
+        const beat = metroBeatRef.current % 4;
+        playClick(metroNextTimeRef.current, beat === 0);
+        const shown = beat + 1;
+        const delayMs = Math.max(0, (metroNextTimeRef.current - ctx.currentTime) * 1000);
+        window.setTimeout(() => setMetroBeat(shown), delayMs);
+        metroNextTimeRef.current += secondsPerBeat;
+        metroBeatRef.current += 1;
+      }
+    }, 25);
+    return () => window.clearInterval(timer);
+  }, [metroOn, getAudioContext, playClick]);
+
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
+      if (e.code === "Space") {
+        e.preventDefault();
+        if (e.repeat) return;
+        toggleLoop();
+        return;
+      }
       if (e.repeat) return;
       if (e.key.toLowerCase() === "z") { setOctave((p) => Math.max(1, p - 1)); return; }
       if (e.key.toLowerCase() === "x") { setOctave((p) => Math.min(7, p + 1)); return; }
+      if (e.key.toLowerCase() === "m") { toggleMetro(); return; }
       const note = BASE_NOTES.find((n) => n.key === e.key.toLowerCase());
       if (note) {
         const label = getNoteLabel(note.note, octaveRef.current);
@@ -547,7 +746,7 @@ export default function Home() {
         playNote(note.semitone);
       }
     },
-    [playNote]
+    [playNote, toggleLoop, toggleMetro]
   );
 
   const handleKeyUp = useCallback((e: KeyboardEvent) => {
@@ -651,6 +850,9 @@ export default function Home() {
           <p className="text-[10px] text-zinc-700 leading-relaxed mt-0.5">
             <span className="text-zinc-500">Octave</span> Z ↓ &nbsp; X ↑
           </p>
+          <p className="text-[10px] text-zinc-700 leading-relaxed mt-0.5">
+            <span className="text-zinc-500">Loop</span> Space → play → Space &nbsp; <span className="text-zinc-500">Metro</span> M
+          </p>
         </div>
       </aside>
 
@@ -703,6 +905,55 @@ export default function Home() {
           >
             ›
           </button>
+        </div>
+
+        {/* Transport: Loop + Metronome quick controls */}
+        <div className="relative flex flex-wrap items-center justify-center gap-2 mb-4 lg:mb-6 px-4">
+          <button
+            onClick={(e) => { e.currentTarget.blur(); toggleLoop(); }}
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-[11px] font-semibold border transition-all cursor-pointer ${
+              loopState === "looping"
+                ? "bg-orange-500 text-white border-orange-400 shadow-lg shadow-orange-500/30 animate-pulse"
+                : loopState === "recording"
+                  ? "bg-red-500 text-white border-red-400 shadow-lg shadow-red-500/30 animate-pulse"
+                  : loopState === "waiting"
+                    ? "bg-amber-500 text-black border-amber-400 shadow-lg shadow-amber-500/30 animate-pulse"
+                    : "bg-white/[0.04] border-white/[0.06] text-zinc-400 hover:bg-white/[0.08] hover:text-white"
+            }`}
+          >
+            <span className={`w-1.5 h-1.5 rounded-full ${loopState === "idle" ? "bg-zinc-600" : "bg-white"}`} />
+            {loopState === "looping"
+              ? `Looping ${loopLabel ?? ""} · Space ⏹`
+              : loopState === "recording"
+                ? `● Rec ${loopCount} notes · Space to loop`
+                : loopState === "waiting"
+                  ? "Waiting — play keys… · Space cancels"
+                  : "Record loop · Space"}
+          </button>
+          <button
+            onClick={(e) => { e.currentTarget.blur(); toggleMetro(); }}
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-[11px] font-semibold border transition-all cursor-pointer ${
+              metroOn
+                ? "bg-amber-500 text-black border-amber-400 shadow-lg shadow-amber-500/30"
+                : "bg-white/[0.04] border-white/[0.06] text-zinc-400 hover:bg-white/[0.08] hover:text-white"
+            }`}
+          >
+            {metroOn ? `● ${bpm} BPM · beat ${metroBeat || "–"}` : `Metro ${bpm} BPM · M`}
+          </button>
+          <div className="flex items-center gap-1">
+            {[1, 2, 3, 4].map((b) => (
+              <span
+                key={b}
+                className={`w-2 h-2 rounded-full transition-all ${
+                  metroOn && metroBeat === b
+                    ? b === 1
+                      ? "bg-amber-400 shadow shadow-amber-400/60 scale-125"
+                      : "bg-orange-400 scale-110"
+                    : "bg-zinc-800"
+                }`}
+              />
+            ))}
+          </div>
         </div>
 
         {/* Piano — horizontally scrollable on small screens */}
@@ -826,8 +1077,103 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto px-4 py-5">
+        <div className="flex-1 overflow-y-auto px-4 py-5 flex flex-col gap-6">
           <MixerPanel mixer={mixer} updateMixer={updateMixer} resetMixer={() => setMixer(DEFAULT_MIXER)} />
+          <div className="h-px bg-orange-500/[0.06]" />
+          <div>
+            <p className="text-[10px] font-semibold text-orange-400/40 uppercase tracking-[0.15em] mb-3">Metronome</p>
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[11px] text-zinc-500 font-medium">Tempo</span>
+              <span className="text-[11px] text-zinc-400 tabular-nums font-mono">{bpm} BPM</span>
+            </div>
+            <div className="relative h-1.5 rounded-full bg-zinc-800/80 overflow-hidden mb-3">
+              <div
+                className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-amber-500 to-orange-600"
+                style={{ width: `${((bpm - 30) / 270) * 100}%` }}
+              />
+              <input
+                type="range" min={30} max={300} value={bpm}
+                onChange={(e) => setBpm(Number(e.target.value))}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              />
+            </div>
+            <div className="flex items-center gap-2 mb-3">
+              {[60, 90, 120, 150].map((p) => (
+                <button
+                  key={p}
+                  onClick={() => setBpm(p)}
+                  className={`flex-1 py-1 rounded-md text-[10px] font-semibold border cursor-pointer transition-all ${
+                    bpm === p
+                      ? "bg-orange-500/[0.15] text-orange-200 border-orange-500/20"
+                      : "text-zinc-600 border-white/[0.05] hover:text-zinc-300 hover:bg-white/[0.04]"
+                  }`}
+                >
+                  {p}
+                </button>
+              ))}
+            </div>
+            <button
+              onClick={(e) => { e.currentTarget.blur(); toggleMetro(); }}
+              className={`w-full py-2 rounded-lg text-[12px] font-semibold border cursor-pointer transition-all ${
+                metroOn
+                  ? "bg-amber-500 text-black border-amber-400 shadow-lg shadow-amber-500/25"
+                  : "bg-white/[0.04] text-zinc-300 border-white/[0.06] hover:bg-white/[0.08]"
+              }`}
+            >
+              {metroOn ? `Stop · beat ${metroBeat || "–"}` : "Start (M)"}
+            </button>
+            <div className="flex items-center justify-center gap-1.5 mt-3">
+              {[1, 2, 3, 4].map((b) => (
+                <span
+                  key={b}
+                  className={`w-2 h-2 rounded-full transition-all ${
+                    metroOn && metroBeat === b
+                      ? b === 1
+                        ? "bg-amber-400 shadow shadow-amber-400/60"
+                        : "bg-orange-400"
+                      : "bg-zinc-800"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+          <div className="h-px bg-orange-500/[0.06]" />
+          <div>
+            <p className="text-[10px] font-semibold text-orange-400/40 uppercase tracking-[0.15em] mb-3">Loop</p>
+            <p className="text-[11px] text-zinc-500 leading-relaxed mb-3">
+              {loopState === "looping"
+                ? `Looping ${loopLabel ?? ""}`
+                : loopState === "recording"
+                  ? `Recording… ${loopCount} notes — Space to loop`
+                  : loopState === "waiting"
+                    ? "Waiting — play keys to start recording"
+                    : "Space → play → Space to loop your take"}
+            </p>
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[11px] text-zinc-500 font-medium">Gap between repeats</span>
+              <span className="text-[11px] text-zinc-400 tabular-nums font-mono">{(loopGapMs / 1000).toFixed(1)}s</span>
+            </div>
+            <div className="relative h-1.5 rounded-full bg-zinc-800/80 overflow-hidden mb-2">
+              <div
+                className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-orange-500 to-amber-400"
+                style={{ width: `${(loopGapMs / 3000) * 100}%` }}
+              />
+              <input
+                type="range" min={0} max={3000} step={100} value={loopGapMs}
+                onChange={(e) => setLoopGapMs(Number(e.target.value))}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              />
+            </div>
+            <p className="text-[10px] text-zinc-600 mb-3">Adds silence after your take so repeats breathe. Applies to the next loop you record.</p>
+            {loopState !== "idle" && (
+              <button
+                onClick={(e) => { e.currentTarget.blur(); stopLoop(); }}
+                className="w-full py-2 rounded-lg text-[12px] font-semibold border cursor-pointer transition-all bg-white/[0.04] text-zinc-300 border-white/[0.06] hover:bg-white/[0.08]"
+              >
+                Stop loop
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Volume meter footer */}
